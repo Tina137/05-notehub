@@ -1,7 +1,7 @@
 import { useState } from "react";
 import css from "./App.module.css";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import getList from "../../services/noteService";
+import { fetchNotes } from "../../services/noteService";
 import { useDebounce } from "use-debounce";
 
 // Components
@@ -18,7 +18,7 @@ function App() {
 
   const { data } = useQuery({
     queryKey: ["notes", page, debouncedInput],
-    queryFn: async () => await getList(page, debouncedInput),
+    queryFn: async () => await fetchNotes(page, debouncedInput),
     placeholderData: keepPreviousData,
   });
   const onPageChange = (selected: number) => {

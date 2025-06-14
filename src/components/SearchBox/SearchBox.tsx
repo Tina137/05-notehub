@@ -1,6 +1,4 @@
 import css from "./SearchBox.module.css";
-// import { searchList } from "../../services/noteService";
-// import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface SearchBoxProps {
   inputValue: string;
@@ -8,14 +6,6 @@ interface SearchBoxProps {
 }
 
 export default function SearchBox({ inputValue, changeInput }: SearchBoxProps) {
-  //   const queryClient = useQueryClient();
-  //   const { mutate } = useMutation({
-  //     mutationFn: (searchWord: string) => searchList(searchWord),
-  //     onSuccess: () => {
-  //       queryClient.invalidateQueries({ queryKey: ["notes"] });
-  //     },
-  //   });
-
   const handleChange = (e: string) => {
     console.log("sucsses");
     changeInput(e);

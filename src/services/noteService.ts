@@ -8,7 +8,7 @@ interface ResProps {
   totalPages: number;
 }
 
-export default async function getList(page: number, debouncedInput: string) {
+export async function fetchNotes(page: number, debouncedInput: string) {
   const params: Record<string, string | number> = { page };
   if (debouncedInput) {
     params.search = debouncedInput;
@@ -25,6 +25,7 @@ export default async function getList(page: number, debouncedInput: string) {
   );
   return res.data;
 }
+
 async function postList(newList: InitialValuesProps) {
   const res = await axios.post<Note>(
     "https://notehub-public.goit.study/api/notes",
@@ -35,7 +36,7 @@ async function postList(newList: InitialValuesProps) {
       },
     }
   );
-  return res;
+  return res.data;
 }
 
 async function deleteList(listId: number) {
@@ -47,7 +48,7 @@ async function deleteList(listId: number) {
       },
     }
   );
-  return res;
+  return res.data;
 }
 
 export { postList, deleteList };
