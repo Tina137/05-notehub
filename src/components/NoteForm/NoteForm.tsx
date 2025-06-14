@@ -22,6 +22,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
     onSuccess: () => {
       console.log("Todo added successfully");
       queryClient.invalidateQueries({ queryKey: ["notes"] });
+      onClose();
     },
   });
 
@@ -33,11 +34,10 @@ export default function NoteForm({ onClose }: NoteFormProps) {
     mutate(values);
     console.log("Order data:", values);
     actions.resetForm();
-    onClose();
   };
   const OrderFormSchema = Yup.object().shape({
     title: Yup.string()
-      .min(3, "Title must be at least 2 characters")
+      .min(3, "Title must be at least 3 characters")
       .max(50, "Title is too long")
       .required("Title is required"),
     content: Yup.string().max(500, "Content is too long"),

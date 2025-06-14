@@ -1,7 +1,7 @@
 import css from "./Pagination.module.css";
 import ReactPaginate from "react-paginate";
 
-interface PaginationProp {
+interface PaginationProps {
   totalPages: number;
   page: number;
   setPage: (selected: number) => void;
@@ -11,7 +11,7 @@ export default function Pagination({
   totalPages,
   page,
   setPage,
-}: PaginationProp) {
+}: PaginationProps) {
   return (
     <ReactPaginate
       breakLabel="..."

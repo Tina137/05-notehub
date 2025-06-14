@@ -1,6 +1,6 @@
 import css from "./NoteList.module.css";
 import { deleteList } from "../../services/noteService";
-import type Note from "../../types/note";
+import { type Note } from "../../types/note";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface NoteListProps {
@@ -10,7 +10,7 @@ interface NoteListProps {
 export default function NoteList({ notesArr }: NoteListProps) {
   const queryClient = useQueryClient();
   const { mutate } = useMutation({
-    mutationFn: async (id: string) => await deleteList(id),
+    mutationFn: async (id: number) => await deleteList(id),
     onSuccess: () => {
       console.log("Todo deleted successfully");
       queryClient.invalidateQueries({ queryKey: ["notes"] });
@@ -26,10 +26,7 @@ export default function NoteList({ notesArr }: NoteListProps) {
             <p className={css.content}>{note.content}</p>
             <div className={css.footer}>
               <span className={css.tag}>{note.tag}</span>
-              <button
-                onClick={() => mutate(String(note.id))}
-                className={css.button}
-              >
+              <button onClick={() => mutate(note.id)} className={css.button}>
                 Delete
               </button>
             </div>

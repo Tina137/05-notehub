@@ -31,6 +31,7 @@ function App() {
     setisModalOpen(false);
   };
   const changeInput = (e: string) => {
+    setPage(1);
     setInputValue(e);
   };
   return (
@@ -40,7 +41,7 @@ function App() {
           <SearchBox inputValue={inputValue} changeInput={changeInput} />
           {data && (
             <Pagination
-              totalPages={data.data.totalPages}
+              totalPages={data.totalPages}
               page={page}
               setPage={onPageChange}
             />
@@ -49,7 +50,7 @@ function App() {
             Create note +
           </button>
         </header>
-        {data && <NoteList notesArr={data?.data.notes} />}
+        {data && <NoteList notesArr={data?.notes} />}
         {isModalOpen && <NoteModal onClose={modalClose} />}
       </div>
     </>

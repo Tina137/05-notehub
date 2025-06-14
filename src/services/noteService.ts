@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import type Note from "../types/note";
+import { type Note } from "../types/note";
 import type { InitialValuesProps } from "../types/note";
 
 interface ResProps {
@@ -23,10 +23,10 @@ export default async function getList(page: number, debouncedInput: string) {
       },
     }
   );
-  return res;
+  return res.data;
 }
 async function postList(newList: InitialValuesProps) {
-  const res = await axios.post<ResProps>(
+  const res = await axios.post<Note>(
     "https://notehub-public.goit.study/api/notes",
     newList,
     {
@@ -38,8 +38,8 @@ async function postList(newList: InitialValuesProps) {
   return res;
 }
 
-async function deleteList(listId: string) {
-  const res = await axios.delete<ResProps>(
+async function deleteList(listId: number) {
+  const res = await axios.delete<Note>(
     `https://notehub-public.goit.study/api/notes/${listId}`,
     {
       headers: {
