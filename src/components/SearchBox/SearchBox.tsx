@@ -1,26 +1,25 @@
 import css from "./SearchBox.module.css";
-import { useState } from "react";
-import { useDebouncedCallback } from "use-debounce";
-import { searchList } from "../../services/noteService";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+// import { searchList } from "../../services/noteService";
+// import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export default function SearchBox() {
-  const [inputValue, setInputValue] = useState("");
+interface SearchBoxProps {
+  inputValue: string;
+  changeInput: (e: string) => void;
+}
 
-  const queryClient = useQueryClient();
-  const { mutate } = useMutation({
-    mutationFn: (searchWord: string) => searchList(searchWord),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["notes"] });
-    },
-  });
+export default function SearchBox({ inputValue, changeInput }: SearchBoxProps) {
+  //   const queryClient = useQueryClient();
+  //   const { mutate } = useMutation({
+  //     mutationFn: (searchWord: string) => searchList(searchWord),
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries({ queryKey: ["notes"] });
+  //     },
+  //   });
 
-  const handleChange = useDebouncedCallback((value: string) => {
-    setInputValue(value);
-    if (value.trim()) {
-      mutate(value.trim());
-    }
-  }, 500);
+  const handleChange = (e: string) => {
+    console.log("sucsses");
+    changeInput(e);
+  };
 
   return (
     <input

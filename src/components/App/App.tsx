@@ -2,6 +2,7 @@ import { useState } from "react";
 import css from "./App.module.css";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import getList from "../../services/noteService";
+import { useDebounce } from "use-debounce";
 
 // Components
 import NoteList from "../NoteList/NoteList";
@@ -12,10 +13,12 @@ import SearchBox from "../SearchBox/SearchBox";
 function App() {
   const [page, setPage] = useState(1);
   const [isModalOpen, setisModalOpen] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [debouncedInput] = useDebounce(inputValue, 500);
 
   const { data } = useQuery({
-    queryKey: ["notes", page],
-    queryFn: async () => await getList(page),
+    queryKey: ["notes", page, debouncedInput],
+    queryFn: async () => await getList(page, debouncedInput),
     placeholderData: keepPreviousData,
   });
   const onPageChange = (selected: number) => {
@@ -27,11 +30,14 @@ function App() {
   const modalClose = () => {
     setisModalOpen(false);
   };
+  const changeInput = (e: string) => {
+    setInputValue(e);
+  };
   return (
     <>
       <div className={css.app}>
         <header className={css.toolbar}>
-          <SearchBox />
+          <SearchBox inputValue={inputValue} changeInput={changeInput} />
           {data && (
             <Pagination
               totalPages={data.data.totalPages}

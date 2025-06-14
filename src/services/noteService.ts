@@ -8,14 +8,16 @@ interface ResProps {
   totalPages: number;
 }
 
-export default async function getList(page: number) {
+export default async function getList(page: number, debouncedInput: string) {
+  const params: Record<string, string | number> = { page };
+  if (debouncedInput) {
+    params.search = debouncedInput;
+  }
+
   const res = await axios.get<ResProps>(
     "https://notehub-public.goit.study/api/notes",
     {
-      params: {
-        page: page,
-        perPage: 12,
-      },
+      params,
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_NOTEHUB_TOKEN}`,
       },
