@@ -50,21 +50,6 @@ async function deleteList(listId: string) {
   return res;
 }
 
-async function searchList(inputText: string) {
-  const res = await axios.get<ResProps>(
-    `https://notehub-public.goit.study/api/notes`,
-    {
-      params: {
-        search: inputText,
-      },
-      headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_NOTEHUB_TOKEN}`,
-      },
-    }
-  );
-  return res.data.notes;
-}
-
-export { postList, deleteList, searchList };
+export { postList, deleteList };
 
 // https://notehub-public.goit.study/api/notes?search=${inputText}
